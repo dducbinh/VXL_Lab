@@ -171,6 +171,9 @@ int main(void)
 		}
 	} */
 
+void clearAllClock() {
+	HAL_GPIO_WritePin(GPIOB, GPIO_PIN_All, GPIO_PIN_RESET);
+}
   /* USER CODE END 1 */
 
   /* MCU Configuration--------------------------------------------------------*/
@@ -325,6 +328,7 @@ unsigned int counter = 0;
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
+	  clearAllClock();
   }
   /* USER CODE END 3 */
 }
