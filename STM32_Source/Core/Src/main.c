@@ -64,6 +64,7 @@ static void MX_GPIO_Init(void);
 int main(void)
 {
   /* USER CODE BEGIN 1 */
+	/*
 	void display7SEG(int num) {
 		switch (num) {
 		case 0:
@@ -168,7 +169,7 @@ int main(void)
 
 			break;
 		}
-	}
+	} */
 
   /* USER CODE END 1 */
 
@@ -196,9 +197,19 @@ int main(void)
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
+unsigned int counter = 0;
 
   while (1)
   {
+	  while (counter < 12) {
+		  HAL_GPIO_TogglePin(GPIOB, GPIO_PIN_0 << counter);
+		  counter++;
+		  HAL_Delay(500);
+	  }
+	  if (counter >= 12) counter = 0;
+
+
+	  /*
 	  static uint8_t ledState = 0;
 	  static int countdown = 0;
 
@@ -309,7 +320,7 @@ int main(void)
 		  		  ledState = 0;
 
 		  		  break;
-	  }
+	  } */
 
     /* USER CODE END WHILE */
 
