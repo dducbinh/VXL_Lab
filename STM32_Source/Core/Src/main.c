@@ -174,14 +174,49 @@ int main(void)
 void clearAllClock() {
 	HAL_GPIO_WritePin(GPIOB, GPIO_PIN_All, GPIO_PIN_RESET);
 }
-
+/*
 void setNumberOnClock(int num) {
 	if (num >= 0 && num <= 11) HAL_GPIO_WritePin(GPIOB, GPIO_PIN_0 << num, GPIO_PIN_SET);
 	else return;
 }
+
 void clearNumberOnClock(int num) {
 	if (num >= 0 && num <= 11) HAL_GPIO_WritePin(GPIOB, GPIO_PIN_0 << num, GPIO_PIN_RESET);
 	else return;
+}
+*/
+void displayClock(int hour, int minute, int second) {
+	clearAllClock();
+
+	HAL_GPIO_WritePin(GPIOB, (1 << (hour % 12)), GPIO_PIN_SET);
+	HAL_GPIO_WritePin(GPIOB, (1 << (minute % 12)), GPIO_PIN_SET);
+	HAL_GPIO_WritePin(GPIOB, (1 << (second % 12)), GPIO_PIN_SET);
+}
+
+void runClock() {
+	int hour = 0;
+	int min = 0;
+	int sec = 0;
+
+	while (1) {
+		displayClock(hour, min, sec);
+		HAL_Delay(1000);
+		sec++;
+
+		if (sec >= 60) {
+			sec = 0;
+			min++;
+
+			if (min >= 60) {
+				min = 0;
+				hour++;
+
+				if (hour >= 12) {
+					hour = 0;
+				}
+			}
+		}
+	}
 }
 
   /* USER CODE END 1 */
@@ -210,17 +245,11 @@ void clearNumberOnClock(int num) {
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
-unsigned int counter = 0;
+//unsigned int counter = 0;
 
   while (1)
   {
-	  while (counter < 12) {
-		  HAL_GPIO_TogglePin(GPIOB, GPIO_PIN_0 << counter);
-		  counter++;
-		  HAL_Delay(500);
-	  }
-	  if (counter >= 12) counter = 0;
-
+	  runClock();
 
 	  /*
 	  static uint8_t ledState = 0;
@@ -338,9 +367,7 @@ unsigned int counter = 0;
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
-	  clearAllClock();
-	  setNumberOnClock(counter);
-	  clearNumberOnClock(counter);
+
   }
   /* USER CODE END 3 */
 }
