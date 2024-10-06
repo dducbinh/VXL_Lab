@@ -179,6 +179,11 @@ void setNumberOnClock(int num) {
 	if (num >= 0 && num <= 11) HAL_GPIO_WritePin(GPIOB, GPIO_PIN_0 << num, GPIO_PIN_SET);
 	else return;
 }
+void clearNumberOnClock(int num) {
+	if (num >= 0 && num <= 11) HAL_GPIO_WritePin(GPIOB, GPIO_PIN_0 << num, GPIO_PIN_RESET);
+	else return;
+}
+
   /* USER CODE END 1 */
 
   /* MCU Configuration--------------------------------------------------------*/
@@ -334,7 +339,8 @@ unsigned int counter = 0;
 
     /* USER CODE BEGIN 3 */
 	  clearAllClock();
-	  setNumberOnClock(5);
+	  setNumberOnClock(counter);
+	  clearNumberOnClock(counter);
   }
   /* USER CODE END 3 */
 }
