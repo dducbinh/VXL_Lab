@@ -200,7 +200,7 @@ void runClock() {
 
 	while (1) {
 		displayClock(hour, min, sec);
-		HAL_Delay(1000);
+		HAL_Delay(50);
 		sec++;
 
 		if (sec >= 60) {
@@ -249,6 +249,7 @@ void runClock() {
 
   while (1)
   {
+	  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_All, GPIO_PIN_SET);
 	  runClock();
 
 	  /*
